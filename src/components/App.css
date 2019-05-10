@@ -1,0 +1,44 @@
+@import url("https://fonts.googleapis.com/css?family=Neucha&subset=cyrillic");
+body {
+  background-image: linear-gradient(-20deg, #e9defa 0%, #fbfcdb 100%);
+  background: #e9defa;
+  display: flex;
+  justify-content: center;
+  min-height: 100vh;
+  position: relative;
+  /* height: 100%; */
+  font-family: "Neucha", cursive;
+}
+
+p,
+h1 {
+  margin: 0;
+}
+
+a {
+  text-decoration: none !important;
+  color: black;
+}
+
+a:hover {
+  color: black;
+}
+
+.home {
+  text-align: center;
+  margin: 20px 0;
+}
+
+.footer {
+  position: absolute;
+  left: 0px;
+  bottom: 0px;
+  width: 100%;
+  text-align: center;
+  padding: 20px;
+  margin-top: 20px;
+}
+
+.footer a{
+  font-weight: bold;
+}

@@ -1,0 +1,87 @@
+.cocktail {
+  width: 60vw;
+  text-align: center;
+  background: white;
+  margin-bottom: 100px;
+}
+
+.cocktailName {
+  font-size: 30px;
+  padding: 15px;
+}
+
+.cocktail img {
+  width: 400px;
+  margin: 5px 0;
+  box-shadow: 4px 4px 10px #777;
+}
+
+.details {
+  margin: 10px 0 40px 0;
+  font-size: 24px;
+
+  padding: 20px 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.details table {
+  margin: 0 20% 0 15%;
+}
+
+.details table tr {
+  border-bottom: 2px solid rgb(100, 170, 150);
+}
+
+.details table td {
+  text-align: left;
+  padding: 10px 5px 10px 20px;
+}
+
+.recipie {
+  margin: 40px 20px 15px 20px;
+  text-align: left;
+}
+
+.heading {
+  font-weight: bold;
+}
+
+.ingredients .heading {
+  text-align: left;
+  margin-left: 16%;
+}
+
+@media only screen and (max-width: 750px) {
+  .cocktail {
+    width: 90vw;
+  }
+
+  .cocktail img {
+    width: 80%;
+  }
+
+  .ingredients{
+      text-align: center;
+      width: 100%;
+  }
+
+  .ingredients .heading {
+    text-align: center;
+    margin: 0;
+  }
+
+  .details {
+    padding: 15px 5px;
+  }
+
+  .details table {
+    margin: 0 auto;
+  }
+
+  .recipie {
+    margin: 20px 20px 15px 20px;
+    text-align: center;
+  }
+}
