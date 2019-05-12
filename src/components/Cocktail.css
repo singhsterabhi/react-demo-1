@@ -2,6 +2,7 @@
   width: 60vw;
   text-align: center;
   background: white;
+  border-radius: 10px;
 }
 
 .cocktailName {

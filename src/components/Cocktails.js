@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import CocktailThumb from "./CocktailThumb";
+import './Cocktails.css'
 
 const Coctails = ({ match }) => {
   const [cocktails, setCocktails] = useState([]);
@@ -28,13 +29,13 @@ const Coctails = ({ match }) => {
   }, []);
 
   return (
-    <div>
+    <div className="cocktails">
       {cocktails !== [] ? (
-        <div>
+        < >
           {cocktails.map(m => {
             return <CocktailThumb key={m.idDrink} drink={m} />;
           })}
-        </div>
+        </>
       ) : (
         ""
       )}
