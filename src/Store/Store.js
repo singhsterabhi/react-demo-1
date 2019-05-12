@@ -4,6 +4,7 @@ export const MyContext = React.createContext({});
 
 const Store = ({ children }) => {
   const [randomDrink, setRandomDrink] = useState({});
+
   // const [cocktail, setCocktail] = useState({});
 
   const fetchRandomDrink = async () => {
@@ -13,7 +14,7 @@ const Store = ({ children }) => {
       "https://www.thecocktaildb.com/api/json/v1/1/random.php"
     ).then(d => d.json());
     setRandomDrink(data.drinks[0]);
-    console.log(randomDrink)
+    console.log(randomDrink);
   };
 
   useEffect(() => {
@@ -22,7 +23,10 @@ const Store = ({ children }) => {
 
   return (
     <MyContext.Provider
-      value={{ randomDrink, setRandomDrink }}>
+      value={{
+        randomDrink,
+        setRandomDrink
+      }}>
       {children}
     </MyContext.Provider>
   );

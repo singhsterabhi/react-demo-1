@@ -1,34 +1,40 @@
-import React, { useContext, useEffect, useState } from "react";
-import { MyContext } from "../Store/Store";
+import React, { useEffect, useState } from "react";
 import "./Cocktail.css";
 
 const Cocktail = props => {
-  const { setRandomDrink } = useContext(MyContext);
   const [cocktail, setCocktail] = useState();
-
+  console.log(props.match);
+  console.log(props.randomDrink);
   useEffect(() => {
-    const fetchRandomDrink = async () => {
-      await fetch("https://www.thecocktaildb.com/api/json/v1/1/random.php")
+    const fetchData = async () => {
+      await fetch(
+        `https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${
+          props.match.params.id
+        }`
+      )
         .then(d => {
           return d.json();
         })
         .then(data => {
-          setRandomDrink(data.drinks[0]);
           setCocktail(data.drinks[0]);
         });
     };
 
-    if (props.location.state) {
-      setCocktail(props.location.state.drink);
+    if (props["randomDrink"]) {
+      console.log("homepage");
+      setCocktail(props["randomDrink"]);
     } else {
-      if (!cocktail) fetchRandomDrink();
+      fetchData();
     }
-  }, []);
+  }, [props]);
 
   const ingredients = () => {
     let ing = [];
     for (let i = 1; i < 16; i++) {
-      if (cocktail[`strIngredient${i}`] !== "") {
+      if (
+        cocktail[`strIngredient${i}`] !== "" &&
+        cocktail[`strIngredient${i}`] !== null
+      ) {
         console.log(cocktail[`strIngredient${i}`]);
         console.log(cocktail[`strMeasure${i}`]);
         ing.push(
@@ -44,26 +50,28 @@ const Cocktail = props => {
 
   return (
     <>
-      {cocktail ? (
-        <div className='cocktail'>
-          <h1 className='cocktailName'>{cocktail.strDrink}</h1>{" "}
-          <img src={cocktail["strDrinkThumb"]} alt={cocktail["strDrink"]} />
-          <div className='details'>
-            <div className='ingredients'>
-              <p className='heading'>Ingredients ~ </p>
-              <table>
-                <tbody>{ingredients()}</tbody>
-              </table>
+      <div className='cocktail'>
+        {cocktail ? (
+          <>
+            <h1 className='cocktailName'>{cocktail.strDrink}</h1>{" "}
+            <img src={cocktail["strDrinkThumb"]} alt={cocktail["strDrink"]} />
+            <div className='details'>
+              <div className='ingredients'>
+                <p className='heading'>Ingredients ~ </p>
+                <table>
+                  <tbody>{ingredients()}</tbody>
+                </table>
+              </div>
+              <div className='recipie'>
+                <p className='heading'>Recipie ~ </p>
+                <p>{cocktail["strInstructions"]}</p>
+              </div>
             </div>
-            <div className='recipie'>
-              <p className='heading'>Recipie ~ </p>
-              <p>{cocktail["strInstructions"]}</p>
-            </div>
-          </div>
-        </div>
-      ) : (
-        ""
-      )}
+          </>
+        ) : (
+          ""
+        )}
+      </div>
     </>
   );
 };
