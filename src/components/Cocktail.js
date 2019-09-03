@@ -2,15 +2,13 @@ import React, { useEffect, useState } from "react";
 import "./Cocktail.css";
 
 const Cocktail = props => {
-  const [cocktail, setCocktail] = useState();
+  const [cocktail, setCocktail] = useState(null);
   console.log(props.match);
   console.log(props.randomDrink);
   useEffect(() => {
     const fetchData = async () => {
       await fetch(
-        `https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${
-          props.match.params.id
-        }`
+        `https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${props.match.params.id}`
       )
         .then(d => {
           return d.json();
@@ -50,20 +48,20 @@ const Cocktail = props => {
 
   return (
     <>
-      <div className='cocktail'>
+      <div className="cocktail">
         {cocktail ? (
           <>
-            <h1 className='cocktailName'>{cocktail.strDrink}</h1>{" "}
+            <h1 className="cocktailName">{cocktail.strDrink}</h1>{" "}
             <img src={cocktail["strDrinkThumb"]} alt={cocktail["strDrink"]} />
-            <div className='details'>
-              <div className='ingredients'>
-                <p className='heading'>Ingredients ~ </p>
+            <div className="details">
+              <div className="ingredients">
+                <p className="heading">Ingredients ~ </p>
                 <table>
                   <tbody>{ingredients()}</tbody>
                 </table>
               </div>
-              <div className='recipie'>
-                <p className='heading'>Recipie ~ </p>
+              <div className="recipie">
+                <p className="heading">Recipie ~ </p>
                 <p>{cocktail["strInstructions"]}</p>
               </div>
             </div>
