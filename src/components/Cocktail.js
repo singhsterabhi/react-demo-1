@@ -1,28 +1,20 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
+
+import { connect } from "react-redux";
+
+import * as actions from "../store/actions";
+
 import "./Cocktail.css";
 
 const Cocktail = props => {
-  const [cocktail, setCocktail] = useState(null);
-  console.log(props.match);
-  console.log(props.randomDrink);
+  // console.log(props.match);
+  // console.log(props.randomDrink);
   useEffect(() => {
-    const fetchData = async () => {
-      await fetch(
-        `https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${props.match.params.id}`
-      )
-        .then(d => {
-          return d.json();
-        })
-        .then(data => {
-          setCocktail(data.drinks[0]);
-        });
-    };
-
     if (props["randomDrink"]) {
-      console.log("homepage");
-      setCocktail(props["randomDrink"]);
+      // console.log("homepage");
+      props.setCocktail(props["randomDrink"]);
     } else {
-      fetchData();
+      props.fetchCocktail(props.match.params.id);
     }
   }, [props]);
 
@@ -30,15 +22,15 @@ const Cocktail = props => {
     let ing = [];
     for (let i = 1; i < 16; i++) {
       if (
-        cocktail[`strIngredient${i}`] !== "" &&
-        cocktail[`strIngredient${i}`] !== null
+        props.cocktail[`strIngredient${i}`] !== "" &&
+        props.cocktail[`strIngredient${i}`] !== null
       ) {
-        console.log(cocktail[`strIngredient${i}`]);
-        console.log(cocktail[`strMeasure${i}`]);
+        // console.log(props.cocktail[`strIngredient${i}`]);
+        // console.log(props.cocktail[`strMeasure${i}`]);
         ing.push(
           <tr key={i}>
-            <td>{i + ". " + cocktail[`strIngredient${i}`]}</td>
-            <td>{cocktail[`strMeasure${i}`]}</td>
+            <td>{i + ". " + props.cocktail[`strIngredient${i}`]}</td>
+            <td>{props.cocktail[`strMeasure${i}`]}</td>
           </tr>
         );
       }
@@ -49,10 +41,13 @@ const Cocktail = props => {
   return (
     <>
       <div className="cocktail">
-        {cocktail ? (
+        {props.cocktail ? (
           <>
-            <h1 className="cocktailName">{cocktail.strDrink}</h1>{" "}
-            <img src={cocktail["strDrinkThumb"]} alt={cocktail["strDrink"]} />
+            <h1 className="cocktailName">{props.cocktail.strDrink}</h1>{" "}
+            <img
+              src={props.cocktail["strDrinkThumb"]}
+              alt={props.cocktail["strDrink"]}
+            />
             <div className="details">
               <div className="ingredients">
                 <p className="heading">Ingredients ~ </p>
@@ -62,7 +57,7 @@ const Cocktail = props => {
               </div>
               <div className="recipie">
                 <p className="heading">Recipie ~ </p>
-                <p>{cocktail["strInstructions"]}</p>
+                <p>{props.cocktail["strInstructions"]}</p>
               </div>
             </div>
           </>
@@ -74,4 +69,20 @@ const Cocktail = props => {
   );
 };
 
-export default Cocktail;
+const mapStateToProps = state => {
+  return {
+    cocktail: state.cocktail
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    fetchCocktail: id => dispatch(actions.fetchCocktail(id)),
+    setCocktail: cocktail => dispatch(actions.setCocktail(cocktail))
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Cocktail);
