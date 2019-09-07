@@ -1,11 +1,10 @@
 import React, { useState } from "react";
-import { Redirect } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 import { DATA } from "./SearchCategories";
 import "./Search.css";
 
-const Search = () => {
+const Search = props => {
   const [selectedOption, setSelectedOption] = useState(null);
-  const [search, setSearch] = useState(false);
   const [searchType, setSearchType] = useState("DRINK_TYPES");
   //   useEffect();
   const handleChange = selectedOption => {
@@ -13,8 +12,10 @@ const Search = () => {
     console.log(selectedOption);
   };
   const handleSubmit = e => {
-    if (selectedOption) setSearch(true);
-    else alert("You need to select an option");
+    if (selectedOption) {
+      // setSearch(true);
+      props.history.push(e);
+    } else alert("You need to select an option");
     console.log(selectedOption);
   };
   const handleSearch = e => {
@@ -23,13 +24,13 @@ const Search = () => {
     console.log(DATA[searchType]);
   };
   return (
-    <div className='search'>
+    <div className="search">
       <h3>Search By</h3>
-      <div className='searchType'>
+      <div className="searchType">
         <label>
           <input
-            type='radio'
-            value='DRINK_TYPES'
+            type="radio"
+            value="DRINK_TYPES"
             checked={searchType === "DRINK_TYPES"}
             onChange={handleSearch}
           />{" "}
@@ -37,32 +38,32 @@ const Search = () => {
         </label>
         <label>
           <input
-            type='radio'
-            value='CATEGORIES'
+            type="radio"
+            value="CATEGORIES"
             checked={searchType === "CATEGORIES"}
             onChange={handleSearch}
           />{" "}
           Categories
         </label>
       </div>
-      <div className='searchForm'>
+      <div className="searchForm">
         <Select
           value={selectedOption}
           onChange={handleChange}
           options={DATA[searchType]}
         />
         <br />
-        <button onClick={handleSubmit}>SEARCH</button>
+        <button
+          onClick={() =>
+            handleSubmit(
+              `/cocktails/${
+                searchType === "CATEGORIES" ? "c" : "a"
+              }/${selectedOption}`
+            )
+          }>
+          SEARCH
+        </button>
       </div>
-      {search ? (
-        <Redirect
-          to={`/cocktails/${
-            searchType === "CATEGORIES" ? "c" : "a"
-          }/${selectedOption}`}
-        />
-      ) : (
-        ""
-      )}
     </div>
   );
 };
@@ -80,8 +81,8 @@ const Select = ({ value, onChange, options }) => {
     onChange(e.target.value);
   };
   return (
-    <select defaultValue='' value={value} onChange={handleChange} required>
-      <option value='' disabled>
+    <select defaultValue="" value={value} onChange={handleChange} required>
+      <option value="" disabled>
         Select an option
       </option>
       {optionsEl}
@@ -89,4 +90,4 @@ const Select = ({ value, onChange, options }) => {
   );
 };
 
-export default Search;
+export default withRouter(Search);

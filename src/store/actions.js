@@ -17,7 +17,7 @@ export const fetchRandomDrink = () => async dispatch => {
 
 export const setCocktail = data => {
   return {
-    type: actionTypes.SET_COCKTAILS,
+    type: actionTypes.SET_COCKTAIL,
     data
   };
 };
@@ -28,4 +28,20 @@ export const fetchCocktail = id => async dispatch => {
   ).then(d => d.json());
 
   dispatch(setCocktail(data.drinks[0]));
+};
+
+export const setCocktails = data => {
+  return {
+    type: actionTypes.SET_COCKTAILS,
+    data
+  };
+};
+
+export const fetchCocktails = (content, search) => async dispatch => {
+  // dispatch(setCocktails(null));
+  const data = await fetch(
+    `https://www.thecocktaildb.com/api/json/v1/1/filter.php?${content}=${search}`
+  ).then(d => d.json());
+
+  dispatch(setCocktails(data.drinks));
 };

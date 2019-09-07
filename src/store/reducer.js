@@ -2,12 +2,18 @@ import * as actionTypes from "./actionTypes";
 
 const initialState = {
   randomDrink: null,
-  cocktail: null
+  cocktail: null,
+  cocktails: null
 };
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case actionTypes.SET_COCKTAILS:
+      return {
+        ...state,
+        cocktails: action.data
+      };
+    case actionTypes.SET_COCKTAIL:
       return {
         ...state,
         cocktail: action.data

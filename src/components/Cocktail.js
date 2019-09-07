@@ -7,11 +7,8 @@ import * as actions from "../store/actions";
 import "./Cocktail.css";
 
 const Cocktail = props => {
-  // console.log(props.match);
-  // console.log(props.randomDrink);
   useEffect(() => {
     if (props["randomDrink"]) {
-      // console.log("homepage");
       props.setCocktail(props["randomDrink"]);
     } else {
       props.fetchCocktail(props.match.params.id);
@@ -25,8 +22,6 @@ const Cocktail = props => {
         props.cocktail[`strIngredient${i}`] !== "" &&
         props.cocktail[`strIngredient${i}`] !== null
       ) {
-        // console.log(props.cocktail[`strIngredient${i}`]);
-        // console.log(props.cocktail[`strMeasure${i}`]);
         ing.push(
           <tr key={i}>
             <td>{i + ". " + props.cocktail[`strIngredient${i}`]}</td>

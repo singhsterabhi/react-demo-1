@@ -14,9 +14,13 @@ const App = () => {
       </h1>
       <Store>
         <Switch>
+          <Route exact path="/cocktail/:id" component={Cocktail} />
+          <Route
+            exact
+            path="/cocktails/:content/:search"
+            component={Cocktails}
+          />
           <Route exact path="/" component={Home} />} />
-          <Route path="/cocktail/:id" component={Cocktail} />
-          <Route path="/cocktails/:content/:search" component={Cocktails} />
         </Switch>
       </Store>
       <div className="footer">
